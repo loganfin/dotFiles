@@ -1,0 +1,57 @@
+(defcfg
+  input (iokit-name)
+  output (kext)
+  fallthrough true
+)
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft up
+  fn   lctl lalt lmet           spc            rmet ralt left down rght
+)
+
+(defalias
+    rai (layer-toggle raise)
+
+    rai_z (tap-hold-next-release 200 z @rai)
+	met_v (tap-hold-next-release 200 v lmet)
+    alt_c (tap-hold-next-release 200 c lalt)
+    ctl_x (tap-hold-next-release 200 x lctl)
+
+    ctl_. (tap-hold-next-release 200 . rctl)
+    alt_, (tap-hold-next-release 200 , lalt)
+    met_m (tap-hold-next-release 200 m rmet)
+    rai_/ (tap-hold-next-release 200 / @rai)
+)
+
+(defalias fn (around (layer-toggle function) fn))
+
+(deflayer default
+  f13 brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  esc  _    _    _    _    _    _    _    _    _    _    _    _
+  _    @rai_z @ctl_x @alt_c    @met_v    _    _    @met_m    @alt_, @ctl_. @rai_/  _    _
+  @fn  _    _    _              _              _    _    _    _    _
+)
+
+(deflayer function
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  _    _    _    _    _    _    _    _    _    _    _    _    _    del
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer raise
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  _    _    _    _    _    _    _    _    _    _    _    _    _    del
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  caps _    _    home  end    _    left down up right _ _ _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
