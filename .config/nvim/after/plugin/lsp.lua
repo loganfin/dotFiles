@@ -1,6 +1,6 @@
 local lsp = require("lsp-zero")
 
-lsp.preset("recommended")
+lsp.preset('lsp-compe')
 
 lsp.ensure_installed({
     'clangd',
@@ -18,7 +18,6 @@ lsp.configure('sumneko_lua', {
     }
 })
 
-
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -28,10 +27,28 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ["<C-Space>"] = cmp.mapping.complete(),
 })
 
-lsp.setup_nvim_cmp({
+-- disabled tab completion
+cmp_mappings['<Tab>'] = nil
+cmp_mappings['<S-Tab>'] = nil
+
+local cmp_config = lsp.defaults.cmp_config({
+    window = {
+        completion = cmp.config.window.bordered()
+    },
     enabled = false,
     mapping = cmp_mappings
 })
+
+cmp.setup(cmp_config)
+
+--[[
+lsp.setup_nvim_cmp({
+    completion = {
+        autocomplete = false,
+    },
+    mapping = cmp_mappings
+})
+--]]
 
 lsp.set_preferences({
     suggest_lsp_servers = false,
