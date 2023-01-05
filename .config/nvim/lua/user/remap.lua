@@ -16,6 +16,21 @@ vim.keymap.set("n", "<a-j>", "<c-w>j")
 vim.keymap.set("n", "<a-k>", "<c-w>k")
 vim.keymap.set("n", "<a-l>", "<c-w>l")
 
+-- open terminal
+vim.keymap.set("n", "<leader>tt", "<cmd>terminal<cr><cmd>startinsert<cr>")
+vim.keymap.set("n", "<leader>tv", "<cmd>vnew<cr><cmd>terminal<cr><cmd>startinsert<cr>")
+vim.keymap.set("n", "<leader>th", "<cmd>new<cr><cmd>terminal<cr><cmd>startinsert<cr>")
+
+-- terminal naviagtion
+vim.keymap.set("t", "<esc>", [[<c-\><c-n>]])
+vim.keymap.set("t", "<a-=>", "<c-w>=")
+vim.keymap.set("t", "<a-z>", "<c-w><bar><c-w>_")
+vim.keymap.set("t", "<a-h>", "<c-w>h")
+vim.keymap.set("t", "<a-j>", "<c-w>j")
+vim.keymap.set("t", "<a-k>", "<c-w>k")
+vim.keymap.set("t", "<a-l>", "<c-w>l")
+
+
 -- yank to the system clipboard
 vim.keymap.set("n", "<leader>y", "\"+y")
 vim.keymap.set("v", "<leader>y", "\"+y")

@@ -42,4 +42,8 @@ return require("packer").startup(function(use)
             {'rafamadriz/friendly-snippets'},
         }
     }
+
+    use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+        require("toggleterm").setup()
+    end}
 end)

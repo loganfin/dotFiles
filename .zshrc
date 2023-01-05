@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -112,7 +112,8 @@ precmd() { vcs_info }
 
 # Format the vcs_info_msg_0_ variable
 zstyle ':vcs_info:git:*' formats 'on branch %b'
-PROMPT='%F{2}%n@%m%F{7}:%F{97}%~%F{7}$ $(git_prompt_info)'
+PROMPT='%F{2}%n@%m%F{7}:%F{97}%~%F{7} $(git_prompt_info)
+$ '
 #precmd () {print -Pn "\e]0;%~\a"}
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
