@@ -32,7 +32,9 @@ local sets = {
     winminheight = 0,
 
     -- because status line displays current mode
-    showmode = false
+    showmode = false,
+
+    swapfile = false,
 }
 
 for k,v in pairs(sets) do

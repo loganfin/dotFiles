@@ -10,5 +10,7 @@ vim.keymap.set('n', '<leader>pf', function()
     end
 end)
 
+vim.keymap.set('n', '<c-p>', builtin.find_files, {})
+
 -- builtin grep functionality is dependant upon the rg executable
 vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})

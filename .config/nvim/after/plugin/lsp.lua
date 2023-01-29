@@ -18,6 +18,17 @@ lsp.configure('sumneko_lua', {
     }
 })
 
+--[[
+lsp.configure('clangd', {
+    cmd = {
+        "clangd",
+        --'--query-driver="/usr/bin/clang"'
+        --'--query-driver="/usr/local/bin/avr-g++"',
+        '--query-driver="/usr/local/Cellar/arm-gcc-bin@8/8-2019-q3-update_2/bin/arm-none-eabi-gcc"',
+    }
+})
+--]]
+
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
