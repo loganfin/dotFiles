@@ -35,6 +35,8 @@ local sets = {
     showmode = false,
 
     swapfile = false,
+
+    termguicolors = true,
 }
 
 for k,v in pairs(sets) do
