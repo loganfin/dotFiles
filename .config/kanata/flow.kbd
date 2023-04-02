@@ -1,0 +1,165 @@
+;; One defcfg entry may be added if desired. This is used for configuration
+;; key-value pairs that change kanata's behaviour at a global level.
+(defcfg
+  linux-dev /dev/input/by-id/usb-ASUSTeK_Computer_Inc._N-KEY_Device-if02-event-kbd
+
+  ;; Optional configuration: enable processing of keys that are not in defsrc.
+  ;; This is useful if you are only mapping a few keys in defsrc instead of
+  ;; most of the keys on your keyboard. Without this, the tap-hold-release and
+  ;; tap-hold-press actions will not activate for keys that are not in defsrc.
+  ;;
+  ;; The reason this is not enabled by default is because some keys may not
+  ;; work correctly if they are intercepted. E.g. rctl/altgr on Windows; see the
+  ;; windows-altgr configuration item above for context.
+  ;;
+  process-unmapped-keys yes
+)
+
+;; Only one defsrc is allowed.
+;;
+;; defsrc defines the keys that will be intercepted by kanata. The order of the
+;; keys matches the deflayer declarations and all deflayer declarations must
+;; have the same number of keys as defsrc.    _
+;;
+;; The visual/spatial positioning is *not* mandatory; it is done by convention
+;; for visual ease. These items are parsed as a long list with newlines being
+;; ignored.
+;;
+;; If you are looking for other keys, the file src/keys/mod.rs should hopefully
+;; provide some insight.
+
+(defsrc
+  esc f1   f2   f3   f4   f5   f6   f7   f8   f9  f10  f11  f12    del
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft up
+  lctl lmet lalt           spc            ralt rmet rctl lft down rght
+)
+
+;; The first layer defined is the layer that will be active by default when
+;; kanata starts up. This layer is the standard QWERTY layout except for the
+;; backtick/grave key (@grl) which is an alias for a tap-hold key.
+;;
+;; There are currently a maximum of 25 layers allowed.
+
+(defalias
+  ;; one-shot modifiers
+  osls (one-shot 2000 lsft)
+  osrs (one-shot 2000 rsft)
+
+  ;; tap-dance
+  lscp (tap-dance 200 (@osls caps))
+  rscp (tap-dance 200 (@osrs caps))
+
+  ;; layer-shift keys
+  rnum (tap-hold 1 200 ret (layer-while-held num))
+  tsym (tap-hold 1 200 tab (layer-while-held sym))
+  bnav (tap-hold 1 200 bspc (layer-while-held nav))
+
+  ;; shifted keys
+  ! S-1
+  @ S-2
+  # S-3
+  $ S-4
+  % S-5
+  ^ S-6
+  & S-7
+  * S-8
+  lp S-9
+  rp S-0
+  | S-\
+  ~ S-`
+  { S-[
+  } S-]
+
+  ;; home-row modifiers
+    ;; dvorak
+    uctl (tap-hold 1 200 u lctl)
+    ealt (tap-hold 1 200 e lalt)
+    omet (tap-hold 1 200 o lmet)
+    hctl (tap-hold 1 200 h rctl)
+    talt (tap-hold 1 200 t ralt)
+    nmet (tap-hold 1 200 n rmet)
+
+    ;; num
+    4ctl (tap-hold 1 200 4 rctl)
+    5alt (tap-hold 1 200 5 ralt)
+    6met (tap-hold 1 200 6 rmet)
+
+    ;; sym
+    lpctl (tap-hold 1 200 @lp lctl)
+    {alt (tap-hold 1 200 @{ lalt)
+    [met (tap-hold 1 200 [ lmet)
+    rpctl (tap-hold 1 200 @rp rctl)
+    }alt (tap-hold 1 200 @} ralt)
+    ]met (tap-hold 1 200 ] rmet)
+
+    ;; nav
+    lfctl (tap-hold 1 200 lft rctl)
+
+)
+
+(deflayer dvorak
+;;|      |      |      |      |      |      |      |      |      |      |      |      |      |
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  tab    '      ,      .      p      y      XX     f      g      c      r      l      /      XX
+  esc    a    @omet  @ealt  @uctl    i      XX     d    @hctl  @talt  @nmet    s      -      XX
+  XX     ;      q      j      k      x      XX     b      m      w      v      z      XX
+  XX     XX     XX   @lscp  @rnum  @tsym  @bnav   spc   @rscp    XX     XX     XX     XX
+  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+)
+
+(deflayer qwerty
+  esc    f1     f2     f3     f4     f5     f6     f7     f8     f9    f10    f11    f12    del
+  grv    1      2      3      4      5      6      7      8      9      0      -      =     bspc
+  tab    q      w      e      r      t      y      u      i      o      p      [      ]      \
+  esc    a      s      d      f      g    @hctl    j      k      l      ;      '      ret
+ @osls   z      x      c      v      b      n      m      ,      .      /    @osrs    up
+  lctl  lmet   lalt                 spc                  ralt   rmet   rctl   lft    down   rght
+)
+
+(deflayer num
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     7      8      9      XX     XX     XX
+  XX     XX    met    lalt   lctl    XX     XX     XX   @4ctl  @5alt  @6met    XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     1      2      3      XX     XX
+  XX     XX     XX     XX     XX     XX    bspc    0    @osrs    XX     XX     XX     XX
+  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+)
+
+(deflayer sym
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  tab    @^     @@     @#     @!     @%     XX     XX     +      @*     @|     @$     \      XX
+  esc    @~   @[met  @{alt  @lpctl   @&     XX     =    @rpctl @}alt  @]met    `      -      XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX    bspc   spc   @osrs    XX     XX     XX     XX
+  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+)
+
+(deflayer nav
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX    rght    XX     XX
+  XX     XX    lmet   lalt   lctl    XX     XX     XX   @lfctl  ralt   rmet    XX     XX     XX
+  XX     XX     XX    down    up     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+)
+
+(deflayer adj
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+)
+
+(deflayer noop
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+)
