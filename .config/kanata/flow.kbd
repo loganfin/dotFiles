@@ -37,9 +37,10 @@
   qw (layer-switch qwerty)
 
   ;; macros
-  ;; flash the kb lights
+  ;; flash the caps light
   lt (macro caps 100 caps)
   dlt (macro caps 100 caps 100 caps 100 caps)
+  rld (macro caps 100 caps lrld)
 
   ;; multis
   ;; switch to layer and flash lights
@@ -142,7 +143,7 @@
 (deflayer adj
   XX
   XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
-  XX   @dvlt  @qwlt     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
+ @rld  @dvlt  @qwlt     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
   XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
   XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
   XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
