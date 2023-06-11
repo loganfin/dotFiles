@@ -20,14 +20,7 @@
 )
 
 (defalias
-  ;; one-shot modifiers
-  osls (one-shot 2000 lsft)
-  osrs (one-shot 2000 rsft)
-
   ;; tap-dance
-  lscp (tap-dance 200 (@osls caps))
-  rscp (tap-dance 200 (@osrs caps))
-
   ;; layer-shift keys
   rnum (tap-hold 1 200 ret (layer-while-held num))
   tsym (tap-hold 1 200 tab (layer-while-held sym))
@@ -62,22 +55,46 @@
   ~ S-`
   { S-[
   } S-]
+  < S-,
+  > S-.
+  + S-=
+  : S-;
+  _ S--
+
+  ;; thumb keys
+    ;; dvorak
+    t_ent (tap-hold 1 200 ent (layer-while-held num))
+    t_lsft (tap-dance 200 ((one-shot 2000 lsft) (caps-word 2000)))
+
+    t_spc (tap-hold 1 200 spc (layer-while-held nav))
+    t_rsft (tap-dance 200 ((one-shot 2000 rsft) caps))
 
   ;; home-row modifiers
     ;; dvorak
-    uctl (tap-hold 1 200 u lctl)
-    ealt (tap-hold 1 200 e lalt)
-    omet (tap-hold 1 200 o lmet)
-    hctl (tap-hold 1 200 h rctl)
-    talt (tap-hold 1 200 t ralt)
-    nmet (tap-hold 1 200 n rmet)
+    home_u (tap-hold 1 200 u lctl)
+    home_e (tap-hold 1 200 e lalt)
+    home_o (tap-hold 1 200 o lmet)
+    home_a (tap-hold 1 200 a (layer-while-held sym))
 
-    ;; num
-    4ctl (tap-hold 1 200 4 rctl)
-    5alt (tap-hold 1 200 5 ralt)
-    6met (tap-hold 1 200 6 rmet)
+    home_h (tap-hold 1 200 h rctl)
+    home_t (tap-hold 1 200 t ralt)
+    home_n (tap-hold 1 200 n rmet)
+    home_s (tap-hold 1 200 s (layer-while-held sym))
+
+    ;; num / sym
+    home_4 (tap-hold 1 200 4 rctl)
+    home_5 (tap-hold 1 200 5 ralt)
+    home_6 (tap-hold 1 200 6 rmet)
+
+    home_= (tap-hold 1 200 = rctl)
+    home_+ (tap-hold 1 200 @+ ralt)
+    home_- (tap-hold 1 200 - rmet)
 
     ;; sym
+    home_: (tap-hold 1 200 @: rctl)
+    home_lp (tap-hold 1 200 @lp ralt)
+    home_rp (tap-hold 1 200 @rp rmet)
+
     lpctl (tap-hold 1 200 @lp lctl)
     {alt (tap-hold 1 200 @{ lalt)
     [met (tap-hold 1 200 [ lmet)
@@ -92,12 +109,12 @@
 
 (deflayer dvorak
  @adj
-  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
-  XX    tab     '      ,      .      p      y      f      g      c      r      l      /      XX
-  esc    a    @omet  @ealt  @uctl    i      XX     d    @hctl  @talt  @nmet    s      -      XX
-  XX     ;      q      j      k      x      XX     b      m      w      v      z      XX
-  XX     XX     XX   @lscp  @rnum  @tsym  @bnav   spc   @rscp    XX     XX     XX     XX
-  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+  XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX
+  tab      '        ,        .        p        y        XX       f        g        c        r        l        /        XX
+  esc   @home_a  @home_o  @home_e  @home_u     i        XX       d     @home_h  @home_t  @home_n  @home_s     -        XX
+  XX       ;        q        j        k        x        XX       b        m        w        v        z        XX
+  XX       XX       XX    @t_lsft  @t_ent     tab      bspc   @t_spc   @t_rsft     XX       XX       XX       XX
+  XX       XX       XX                         XX                         XX       XX       XX       XX       XX       XX
 )
 
 (deflayer qwerty
@@ -112,22 +129,22 @@
 
 (deflayer num
   f13
-  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
-  XX     XX     XX     XX     XX     XX     XX     XX     7      8      9      XX     XX     XX
-  XX     XX    met    lalt   lctl    XX     XX     XX   @4ctl  @5alt  @6met    XX     XX     XX
-  XX     XX     XX     XX     XX     XX     XX     XX     1      2      3      XX     XX
-  XX     XX     XX     XX     XX     XX    bspc    0    @osrs    XX     XX     XX     XX
-  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+  XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX
+  XX       XX       @<       @>       @@       @#       XX       \        7        8        9        XX       XX       XX
+  esc      @!    @home_-  @home_+  @home_=     .        XX       @|    @home_4  @home_5  @home_6     0        XX       XX
+  XX       XX       /        @*       @^       `        XX       @~       1        2        3        XX       XX
+  XX       XX       XX       XX       XX       XX      bspc     spc    @t_rsft     XX       XX       XX       XX
+  XX       XX       XX                         XX                         XX       XX       XX       XX       XX       XX
 )
 
 (deflayer sym
   f13
-  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
-  XX    tab     @^     @@     @#     @!     @%     XX     +      @*     @|     @$     \      XX
-  esc    @~   @[met  @{alt  @lpctl   @&     XX     =    @rpctl @}alt  @]met    `      -      XX
-  XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX     XX
-  XX     XX     XX     XX     XX     XX    bspc   spc   @osrs    XX     XX     XX     XX
-  XX     XX     XX                   XX                   XX     XX     XX     XX     XX     XX
+  XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX       XX
+  XX       XX       @<       @>       @@       @#       XX       \        @&       @{       @}       XX       /        XX
+  esc      @!    @home_-  @home_+  @home_=     .        XX       @|    @home_:  @home_lp @home_rp    @%       @_       XX
+  XX       XX       /        @*       @^       `        XX       @~       @$       [        ]        XX       XX
+  XX       XX       XX    @t_lsft    ent      tab      bspc     spc    @t_rsft     XX       XX       XX       XX
+  XX       XX       XX                         XX                         XX       XX       XX       XX       XX       XX
 )
 
 (deflayer nav
