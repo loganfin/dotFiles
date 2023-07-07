@@ -28,6 +28,8 @@ local sets = {
 
     showtabline = 2,
 
+    colorcolumn = "80",
+
     -- allow for flush zoom-in of splits
     winminheight = 0,
 
@@ -37,6 +39,9 @@ local sets = {
     swapfile = false,
 
     termguicolors = true,
+
+    -- fix namespace indenting in c++
+    cino = "N-s",
 }
 
 for k,v in pairs(sets) do
