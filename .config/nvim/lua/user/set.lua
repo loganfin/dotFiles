@@ -41,7 +41,7 @@ local sets = {
     termguicolors = true,
 
     -- fix namespace indenting in c++
-    cino = "N-s",
+    cino = "(gN,N-s)",
 }
 
 for k,v in pairs(sets) do

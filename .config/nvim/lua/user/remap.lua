@@ -46,3 +46,10 @@ vim.keymap.set("x", "<leader>p", "\"_dP")
 -- delete without changing the content of the copy buffer
 vim.keymap.set("n", "<leader>d", "\"_d")
 vim.keymap.set("v", "<leader>d", "\"_d")
+
+-- format the code
+vim.keymap.set("n", "<leader>gq", function()
+    local view = vim.fn.winsaveview()
+    vim.cmd('execute \"normal gggqG\"')
+    vim.fn.winrestview(view)
+end)
