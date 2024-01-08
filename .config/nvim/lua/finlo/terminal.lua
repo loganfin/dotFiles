@@ -104,6 +104,11 @@ function Terminal:open(orientation)
 		end
 	else
 		vim.api.nvim_win_set_buf(self.win_id, self.bufnr)
+
+		if self.orientation == "float" then
+			-- needs to be called after the float is connected to a buffer
+			vim.api.nvim_win_set_option(self.win_id, "winhl", "Normal:MyHighlight")
+		end
 	end
 
 	if vim.bo[self.bufnr] ~= self.filetype then
