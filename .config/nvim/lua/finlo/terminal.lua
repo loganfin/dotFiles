@@ -93,7 +93,7 @@ function Terminal:open(orientation)
 		self.orientation = "float"
 	end
 
-	if self.bufnr == nil then
+	if self.bufnr == nil or vim.api.nvim_buf_is_valid(self.bufnr) == false then
 		vim.cmd("terminal")
 		vim.cmd("startinsert")
 		self.bufnr = vim.api.nvim_get_current_buf()
@@ -120,7 +120,7 @@ local term = Terminal:new()
 
 local function handle_term_leave()
 	if term.orientation == "float" then
-        -- close that float!
+		-- close that float!
 		term:close_win()
 	end
 end
